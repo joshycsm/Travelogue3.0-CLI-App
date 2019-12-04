@@ -41,3 +41,5 @@ josh_japan = Recommendation.create(attraction: "Jiro Dreams of Sushi Restaurant 
 martha_japan = Recommendation.create(attraction: "Citadel of Aleppo", traveler: martha, country: syria)
 brian_japan = Recommendation.create(attraction: "Uyuni Salt Flats", traveler: brian, country: bolivia)
 josh_italy = Recommendation.create(attraction: "Leaning Tower of Pisa", traveler: josh, country: italy)
+
+# useless line of code
