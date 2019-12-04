@@ -1,3 +1,7 @@
 development:
   adapter: sqlite3
+<<<<<<< HEAD
   database: db/travelogue.sqlite3
+=======
+  database: db/travelogue.sqlite3
+>>>>>>> ef230faa3781f03ccd4648922f7f5779bda4bc4b
