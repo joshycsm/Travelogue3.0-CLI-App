@@ -8,6 +8,7 @@ Bundler.require
 # require 'require_all'
 
 require_all 'lib'
+require_rel '../app'
 
 binding.pry
 0
