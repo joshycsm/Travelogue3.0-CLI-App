@@ -55,9 +55,9 @@
 # rake db:rollback
 # rake db:migrate
 
-def greet
-    puts "Hi"
-end
+# def greet
+#     puts "Hi"
+# end
 
-greet
+# greet
 

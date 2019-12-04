@@ -10,25 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_205224) do
+ActiveRecord::Schema.define(version: 2019_12_04_173253) do
 
-  create_table "hiker_trails", force: :cascade do |t|
-    t.integer "hiker_id"
-    t.integer "trail_id"
-    t.index ["hiker_id"], name: "index_hiker_trails_on_hiker_id"
-    t.index ["trail_id"], name: "index_hiker_trails_on_trail_id"
-  end
-
-  create_table "hikers", force: :cascade do |t|
+  create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.integer "age"
   end
 
-  create_table "trails", force: :cascade do |t|
+  create_table "recommendations", force: :cascade do |t|
+    t.string "attraction"
+    t.integer "country_id"
+    t.integer "traveler_id"
+    t.index ["country_id"], name: "index_recommendations_on_country_id"
+    t.index ["traveler_id"], name: "index_recommendations_on_traveler_id"
+  end
+
+  create_table "travelers", force: :cascade do |t|
     t.string "name"
-    t.float "length"
   end
 
-  add_foreign_key "hiker_trails", "hikers"
-  add_foreign_key "hiker_trails", "trails"
+  add_foreign_key "recommendations", "countries"
+  add_foreign_key "recommendations", "travelers"
 end
