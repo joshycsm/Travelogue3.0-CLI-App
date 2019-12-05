@@ -14,6 +14,8 @@ class Cli
         end
         # puts "Hey there #{Traveler.find(@traveler.id).name}"
         # binding.pry
+        puts "Hey there #{Traveler.find(@traveler.id).name}"
+        binding.pry
         view_create_option
     end
 
@@ -84,8 +86,8 @@ class Cli
     def create_recommendation
         puts "For the country #{@new_country.name}, what is your recommendation?"
         recommended_attraction = gets.chomp
-        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler , country: @new_country)
-
+        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @new_country)
+#binding.pry
         puts "Whoohoo! You made this recommendation: #{new_recommendation.attraction}!"
         view_create_option
     end
@@ -96,9 +98,11 @@ class Cli
 
         if updated_country == "japan"
             binding.pry
-            puts "The current recommendation for Japan is #{Country.find_by(name: "Japan").recommendations.attraction}"
+            puts "The current recommendations for Japan is #{Country.find_by(name: "Japan").recommendations}"
         end
 
+
+        
     end
 
     def delete_recommendation
