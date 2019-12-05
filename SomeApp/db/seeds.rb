@@ -2,11 +2,11 @@ Country.destroy_all
 Traveler.destroy_all
 Recommendation.destroy_all
 
-japan = Country.create(name: "Japan")
-native_america = Country.create(name: "Native America")
-syria = Country.create(name: "Syria")
-bolivia = Country.create(name: "Bolivia")
-italy = Country.create(name: "Italy")
+japan = Country.create(name: "japan")
+native_america = Country.create(name: "native america")
+syria = Country.create(name: "syria")
+bolivia = Country.create(name: "bolivia")
+italy = Country.create(name: "italy")
 
 finn = Traveler.create(name: "Finn")
 josh = Traveler.create(name: "Josh")
