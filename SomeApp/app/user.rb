@@ -1,4 +1,4 @@
-class Traveler
+class User
     attr_reader :name
 
     def initialize(name)

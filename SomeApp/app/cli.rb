@@ -1,17 +1,19 @@
 class Cli
-    attr_reader :traveler
+    attr_reader :user
 
-    def initialize(traveler)
-        @traveler = traveler
+    def initialize(user)
+        @user = user
     end
 
     def start
-        puts "Welcome #{traveler.name}!"
-        if Traveler.find_by(name: traveler.name)
-            @traveler = Traveler.find_by(name: traveler.name)
+        puts "Welcome #{user.name}!"
+        if Traveler.find_by(name: user.name)
+            @traveler = Traveler.find_by(name: user.name)
         else
-            @traveler = Traveler.create(name: traveler.name)
+            @traveler = Traveler.create(name: user.name)
         end
+        # puts "Hey there #{Traveler.find(@traveler.id).name}"
+        # binding.pry
         puts "Hey there #{Traveler.find(@traveler.id).name}"
         binding.pry
         view_create_option
@@ -46,9 +48,9 @@ class Cli
 
         if country_choice == "japan"
             # puts "Nihongo-o rules! #{Recommendation.all.first.attraction}"
-            puts "#{traveler.name} you might love the #{Recommendation.find(1).attraction}!"
+            puts "#{user.name} you might love the #{Recommendation.find(1).attraction}!"
         elsif country_choice == "italy"
-            puts "#{traveler.name} you might love the #{Recommendation.find(5).attraction}!"
+            puts "#{user.name} you might love the #{Recommendation.find(5).attraction}!"
         else
             puts "Wrong, there are only two great countries to travel to, your love is wrong."
             choose_country

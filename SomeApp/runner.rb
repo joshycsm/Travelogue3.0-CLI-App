@@ -8,10 +8,10 @@ ActiveRecord::Base.logger = nil
 puts "Welcome to Traveler's Insight!!!"
 puts "What is your name?"
 
-traveler_name = gets.chomp
+user_name = gets.chomp
 
-new_traveler = Traveler.new(traveler_name)
+new_user = User.new(user_name)
 
-new_game = Cli.new(new_traveler)
+new_game = Cli.new(new_user)
 
 new_game.start
