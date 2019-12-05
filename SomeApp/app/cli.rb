@@ -7,14 +7,22 @@ class Cli
 
     def start
         puts "Welcome #{user.name}!"
+        if Traveler.find_by(name: user.name)
+            @traveler = Traveler.find_by(name: user.name)
+        else
+            @traveler = Traveler.create(name: user.name)
+        end
+        puts "Hey there #{Traveler.find(@traveler.id).name}"
+        binding.pry
         view_create_option
     end
 
     def view_create_option
-        puts "Please choose 1, 2, or 3:"
+        puts "Please choose 1, 2, 3, or 4:"
         puts "1. View recommendations for a country" 
         puts "2. Create a recommendation for a country"
-        puts "3. Exit App"
+        puts "3. Update a recommendation"
+        puts "4. Exit App"
         option_choice =gets.chomp.to_i
 
         if option_choice == 1
@@ -22,6 +30,8 @@ class Cli
         elsif option_choice == 2
             create_country
         elsif option_choice == 3
+            update_recommendation
+        elsif option_choice == 4
             puts "Happy travels!"
             exit
         else
@@ -74,14 +84,23 @@ class Cli
     def create_recommendation
         puts "For the country #{@new_country.name}, what is your recommendation?"
         recommended_attraction = gets.chomp
-        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler , country: @new_country)
-
+        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @new_country)
+#binding.pry
         puts "Whoohoo! You made this recommendation: #{new_recommendation.attraction}!"
         view_create_option
     end
     
     def update_recommendation
+        puts "Which country's recommendation do you want to update, Japan or Italy?"
+        updated_country = gets.chomp.downcase
 
+        if updated_country == "japan"
+            binding.pry
+            puts "The current recommendations for Japan is #{Country.find_by(name: "Japan").recommendations}"
+        end
+
+
+        
     end
 
     def delete_recommendation
