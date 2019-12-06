@@ -15,97 +15,99 @@ class Cli
         # puts "Hey there #{Traveler.find(@traveler.id).name}"
         # binding.pry
         puts "Hey there #{Traveler.find(@traveler.id).name}"
-        binding.pry
-        view_create_option
+        # binding.pry
+        crud_menu
     end
 
-    def view_create_option
-        puts "Please choose 1, 2, 3, or 4:"
-        puts "1. View recommendations for a country" 
-        puts "2. Create a recommendation for a country"
+    def crud_menu
+        puts "Please choose 1, 2, 3, 4 or 5:"
+        puts "1. Create a recommendation for a country"
+        puts "2. Read recommendations for a country" 
         puts "3. Update a recommendation for a country"
-        puts "4. Exit App"
-        option_choice =gets.chomp.to_i
-
-        if option_choice == 1
-            choose_country
-        elsif option_choice == 2
-            create_country
-        elsif option_choice == 3
-            update_recommendation
-        elsif option_choice == 4
-            puts "Happy travels!"
-            exit
-        else
-            puts "Invalid choice!"
-            view_create_option
-        end
-    end
-
-    def choose_country
-        puts "What country are you interested in?"
-        country_choice = gets.chomp.downcase
-
-        if country_choice == "japan"
-            # puts "Nihongo-o rules! #{Recommendation.all.first.attraction}"
-            puts "#{user.name} you might love the #{Recommendation.find(1).attraction}!"
-        elsif country_choice == "italy"
-            puts "#{user.name} you might love the #{Recommendation.find(5).attraction}!"
-        else
-            puts "Wrong, there are only two great countries to travel to, your love is wrong."
-            choose_country
-        end
-        view_create_option
-    end
-
-    def create_country
-        puts "What country is your recommendation for?"
-        chosen_name = gets.chomp
-        @new_country = Country.create(name: chosen_name)
-        puts "You can now create a recommendation for #{@new_country.name}!"
-
-        recommendation_option
-    end
-
-    def recommendation_option
-        puts "Would you like to add any recommendations for this country? Please choose 1 for yes or 2 for no."
+        puts "4. Delete a recommendation for a country"
+        puts "5. Exit App"
         option_choice =gets.chomp.to_i
 
         if option_choice == 1
             create_recommendation
         elsif option_choice == 2
-            view_create_option
+            read_recommendation
+        elsif option_choice == 3
+            update_recommendation
+        elsif option_choice == 4
+            delete_recommendation
+        elsif option_choice == 5
+            puts "Happy travels!"
+            exit
         else
-            puts "Try again!"
-            recommendation_option
+            puts "Invalid choice!"
+            crud_menu
+        end
+    end
+    
+    def choose_country
+        puts "What country are you interested in?"
+        @chosen_name = gets.chomp.downcase
+        if Country.find_by(name: @chosen_name)
+            @chosen_country = Country.find_by(name: @chosen_name)
+        else
+            @chosen_country = Country.create(name: @chosen_name)
         end
 
-        view_create_option
+        puts "The country you are interested in is #{@chosen_country.name.capitalize}!"
     end
 
     def create_recommendation
-        puts "For the country #{@new_country.name}, what is your recommendation?"
+        choose_country
+        puts "For the country #{@chosen_country.name.capitalize}, what is your recommendation?"
         recommended_attraction = gets.chomp
-        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @new_country)
+        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @chosen_country)
 #binding.pry
         puts "Whoohoo! You made this recommendation: #{new_recommendation.attraction}!"
-        view_create_option
+        crud_menu
     end
-    
-    def update_recommendation
-        puts "Which country's recommendation do you want to update, Japan or Italy?"
-        updated_country = gets.chomp.downcase
 
-        if updated_country == "japan"
-            binding.pry
-            puts "The current recommendations for Japan is #{Country.find_by(name: "Japan").recommendations}"
+    def chosen_recommendation
+
+        Recommendation.find_by(id: @chosen_country.id)
+    end
+
+    def read_recommendation
+        choose_country
+        chosen_recommendation
+
+        if chosen_recommendation
+            puts "#{user.name} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
+        else
+            puts "Sorry, #{user.name}. No recommendation exists for #{@chosen_country.name.capitalize}!"
         end
 
+        crud_menu
+    end
 
-        
+    def update_recommendation
+        choose_country
+        chosen_recommendation
+        if !chosen_recommendation
+            puts "Sorry, no recommendation exists for #{@chosen_country.name.capitalize}"
+        else
+            puts "The first recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
+            puts "What would you like to change it to?"
+            changed_attraction = gets.chomp
+            
+            updated_recommendation = (chosen_recommendation.update(attraction: changed_attraction))
+            # binding.pry
+
+            puts "You changed the recommendation for #{@chosen_country.name.capitalize}. Thanks!"
+        end
+
+            crud_menu
     end
 
     def delete_recommendation
-        
+        choose_country
+
+        puts "The recommendation for #{@chosen_country.name.capitalize} has been deleted from Traveler's Insight."
+        crud_menu
     end
 end
