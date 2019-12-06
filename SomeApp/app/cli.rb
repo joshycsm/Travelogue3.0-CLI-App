@@ -46,72 +46,67 @@ class Cli
 
     def choose_country
         puts "What country are you interested in?"
-        chosen_name = gets.chomp.downcase
-        @new_country = Country.create(name: chosen_name)
-        puts "The country you are interested in is #{@new_country.name.capitalize}!"
+        @chosen_name = gets.chomp.downcase
+
+        if Country.find_by(name: @chosen_name)
+            @chosen_country = Country.find_by(name: @chosen_name)
+        else
+            @chosen_country = Country.create(name: @chosen_name)
+        end
+
+        puts "The country you are interested in is #{@chosen_country.name.capitalize}!"
     end
     
     def create_recommendation
         choose_country
-        puts "For the country #{@new_country.name.capitalize}, what is your recommendation?"
+        puts "For the country #{@chosen_country.name.capitalize}, what is your recommendation?"
         recommended_attraction = gets.chomp
-        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @new_country)
+        new_recommendation = Recommendation.create(attraction: recommended_attraction, traveler: @traveler, country: @chosen_country)
 #binding.pry
         puts "Whoohoo! You made this recommendation: #{new_recommendation.attraction}!"
         crud_menu
     end
 
+    def chosen_recommendation
+        Recommendation.find_by(id: @chosen_country.id)
+    end
+
+
     def read_recommendation
         choose_country
+        chosen_recommendation
 
-        if @new_country.name == "japan"
-            # puts "Nihongo-o rules! #{Recommendation.all.first.attraction}"
-            puts "#{user.name} you might love the #{Recommendation.find(1).attraction}!"
-        elsif @new_country.name == "italy"
-            puts "#{user.name} you might love the #{Recommendation.find(5).attraction}!"
+        if chosen_recommendation
+            puts "#{user.name} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
         else
-            puts "Sorry, there are only two great countries to travel to at the moment, Japan or Italy."
-            read_recommendation
+            puts "Sorry, #{user.name}. No recommendation exists for #{@chosen_country.name.capitalize}."
         end
+
         crud_menu
     end
 
     def update_recommendation
         choose_country
-
-        if @new_country.name == "japan" || @new_country.name == "italy"
-            change_database_recommendation(@new_country.name)
-            # # binding.pry
-            # current_recommendation = Country.find_by(name: "Japan").recommendations.first
-            # puts "The first recommendation for Japan is #{current_recommendation.attraction}."
-            # puts "What would you like to change it to?"
-            # changed_attraction = gets.chomp
-            
-            # current_recommendation.update(attraction: changed_attraction)
-
-            # puts "You changed the recommendation for Japan to #{current_recommendation.attraction}.  Thanks!"
+        chosen_recommendation
+        if !chosen_recommendation
+            puts "Sorry, no recommendation exists for #{@chosen_country.name.capitalize}"
         else
-            puts "Sorry, only Japan or Italy can be updated.  Try again!"
-            update_recommendation
-        end
-    end
-    
-    def change_database_recommendation(updated_country)
-        current_recommendation = Country.all.find_by(name: updated_country).recommendations.first
-        binding.pry
-        puts "The first recommendation for #{updated_country.capitalize} is #{current_recommendation.attraction}."
-        puts "What would you like to change it to?"
-        changed_attraction = gets.chomp
-        
-        current_recommendation.update(attraction: changed_attraction)
+            puts "The first recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
+            puts "What would you like to change it to?"
+            changed_attraction = gets.chomp
 
-        puts "You changed the recommendation for #{updated_country.capitalize} to #{current_recommendation.attraction}.  Thanks!"
+            updated_recommendation = chosen_recommendation.update(attraction: changed_attraction)
+
+            puts "You changed the recommendation.  Thanks!"
+        end
+
         crud_menu
     end
 
     def delete_recommendation
         choose_country
         
-        puts "The recommendation for #{@new_country.name} has been deleted from Traveler's Insight."
+        puts "The recommendation for #{@chosen_country.name.capitalize} has been deleted from Traveler's Insight."
+        crud_menu
     end
 end
