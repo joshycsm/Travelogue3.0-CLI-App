@@ -4,20 +4,21 @@ class Cli
     def initialize(user)
         @user = user
     end
-
     
     def start
-        puts "Welcome #{user.name}!"
-        if Traveler.find_by(name: user.name)
-            @traveler = Traveler.find_by(name: user.name)
+        puts "Welcome #{user.name.capitalize}!"
+        if Traveler.find_by(name: user.name.capitalize)
+            @traveler = Traveler.find_by(name: user.name.capitalize)
         else
-            @traveler = Traveler.create(name: user.name)
+            @traveler = Traveler.create(name: user.name.capitalize)
         end
+        # puts "Hey there #{Traveler.find(@traveler.id).name}"
+        # binding.pry
         # puts "Hey there #{Traveler.find(@traveler.id).name}"
         # binding.pry
         crud_menu
     end
-    
+
     def crud_menu
         puts "Please choose 1, 2, 3, 4 or 5:"
         puts "1. Create a recommendation for a country"
@@ -43,11 +44,10 @@ class Cli
             crud_menu
         end
     end
-
+    
     def choose_country
         puts "What country are you interested in?"
         @chosen_name = gets.chomp.downcase
-
         if Country.find_by(name: @chosen_name)
             @chosen_country = Country.find_by(name: @chosen_name)
         else
@@ -56,7 +56,7 @@ class Cli
 
         puts "The country you are interested in is #{@chosen_country.name.capitalize}!"
     end
-    
+
     def create_recommendation
         choose_country
         puts "For the country #{@chosen_country.name.capitalize}, what is your recommendation?"
