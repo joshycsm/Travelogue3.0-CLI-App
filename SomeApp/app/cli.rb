@@ -4,18 +4,17 @@ class Cli
     def initialize(user)
         @user = user
     end
-
     
     def start
-        puts "Welcome #{user.name}!"
-        if Traveler.find_by(name: user.name)
-            @traveler = Traveler.find_by(name: user.name)
+        puts "Welcome #{user.name.capitalize}!"
+        if Traveler.find_by(name: user.name.capitalize)
+            @traveler = Traveler.find_by(name: user.name.capitalize)
         else
-            @traveler = Traveler.create(name: user.name)
+            @traveler = Traveler.create(name: user.name.capitalize)
         end
         # puts "Hey there #{Traveler.find(@traveler.id).name}"
         # binding.pry
-        puts "Hey there #{Traveler.find(@traveler.id).name}"
+        # puts "Hey there #{Traveler.find(@traveler.id).name}"
         # binding.pry
         crud_menu
     end
@@ -78,9 +77,9 @@ class Cli
         chosen_recommendation
 
         if chosen_recommendation
-            puts "#{user.name} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
+            puts "#{user.name.capitalize} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
         else
-            puts "Sorry, #{user.name}. No recommendation exists for #{@chosen_country.name.capitalize}!"
+            puts "Sorry, #{user.name.capitalize}. No recommendation exists for #{@chosen_country.name.capitalize}!"
         end
 
         crud_menu
@@ -99,14 +98,19 @@ class Cli
             updated_recommendation = (chosen_recommendation.update(attraction: changed_attraction))
             # binding.pry
 
-            puts "You changed the recommendation for #{@chosen_country.name.capitalize}. Thanks!"
+            puts "You changed the recommendation for #{@chosen_country.name.capitalize} to #{changed_attraction}. Thanks!"
         end
 
             crud_menu
     end
 
+    def chosen_recommendation_to_delete
+        chosen_recommendation.delete
+    end
+
     def delete_recommendation
         choose_country
+        chosen_recommendation_to_delete
 
         puts "The recommendation for #{@chosen_country.name.capitalize} has been deleted from Traveler's Insight."
         crud_menu

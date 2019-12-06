@@ -3,11 +3,7 @@ Traveler.destroy_all
 Recommendation.destroy_all
 
 japan = Country.create(name: "japan")
-<<<<<<< HEAD
-native_america = Country.create(name: "native America")
-=======
 native_america = Country.create(name: "native america")
->>>>>>> 930f7307b370fcb84904e0b2a76ac3241286d7b9
 syria = Country.create(name: "syria")
 bolivia = Country.create(name: "bolivia")
 italy = Country.create(name: "italy")
