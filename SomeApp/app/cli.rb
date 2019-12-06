@@ -68,18 +68,18 @@ class Cli
     end
 
     def chosen_recommendation
-
         Recommendation.find_by(id: @chosen_country.id)
     end
+
 
     def read_recommendation
         choose_country
         chosen_recommendation
 
         if chosen_recommendation
-            puts "#{user.name.capitalize} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
+            puts "#{user.name} for the country #{@chosen_country.name.capitalize}, the recommendation is #{chosen_recommendation.attraction}!"
         else
-            puts "Sorry, #{user.name.capitalize}. No recommendation exists for #{@chosen_country.name.capitalize}!"
+            puts "Sorry, #{user.name}. No recommendation exists for #{@chosen_country.name.capitalize}."
         end
 
         crud_menu
@@ -91,27 +91,25 @@ class Cli
         if !chosen_recommendation
             puts "Sorry, no recommendation exists for #{@chosen_country.name.capitalize}"
         else
-            puts "The first recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
+            puts "The recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
             puts "What would you like to change it to?"
             changed_attraction = gets.chomp
-            
-            updated_recommendation = (chosen_recommendation.update(attraction: changed_attraction))
-            # binding.pry
+
+            updated_recommendation = chosen_recommendation.update(attraction: changed_attraction)
 
             puts "You changed the recommendation for #{@chosen_country.name.capitalize} to #{changed_attraction}. Thanks!"
         end
 
-            crud_menu
+        crud_menu
     end
 
-    def chosen_recommendation_to_delete
-        chosen_recommendation.delete
-    end
+    # def chosen_recommendation
+    #     chosen_recommendation.delete
+    # end
 
     def delete_recommendation
         choose_country
-        chosen_recommendation_to_delete
-
+        
         puts "The recommendation for #{@chosen_country.name.capitalize} has been deleted from Traveler's Insight."
         crud_menu
     end
