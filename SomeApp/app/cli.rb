@@ -91,17 +91,21 @@ class Cli
         if !chosen_recommendation
             puts "Sorry, no recommendation exists for #{@chosen_country.name.capitalize}"
         else
-            puts "The first recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
+            puts "The recommendation for #{@chosen_country.name.capitalize} is #{chosen_recommendation.attraction}."
             puts "What would you like to change it to?"
             changed_attraction = gets.chomp
 
             updated_recommendation = chosen_recommendation.update(attraction: changed_attraction)
 
-            puts "You changed the recommendation.  Thanks!"
+            puts "You changed the recommendation for #{@chosen_country.name.capitalize} to #{changed_attraction}. Thanks!"
         end
 
         crud_menu
     end
+
+    # def chosen_recommendation
+    #     chosen_recommendation.delete
+    # end
 
     def delete_recommendation
         choose_country

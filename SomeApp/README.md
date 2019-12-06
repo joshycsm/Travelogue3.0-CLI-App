@@ -1,19 +1,58 @@
-Traveler's Insight allows users to create recommendations for attractions in different countries, to read their own and others' recommendations, to update a recommendation and to delete a recommendation.
+Traveler's Insight is a CLI app that creates a browseable travelogue.
 
-Roll back first so the data is reset to the seed data.
+It allows users to:
 
-1. Create Recommendation:
-   a. What country are you interested in? Lux
-   b. What is your recommendation? Shiny shiny shiny
+- create recommendations for attractions in different countries
+- read their own and others' recommendations
+- update a recommendation
+- delete a recommendation
 
-2. Read Recommendation:
-   a. What country are you interested in? Lux
+How to run it:
 
-3. Update Recommendation:
-   a. What is your new recommendation? not shiny
+1. from root directory: ruby runner.rb
 
-4. Read Recommendation:
-   a. What country are you interested in? Lux
+Example CRUD actions:
 
-5. Delete Recommendation
-   a. What country are you interested in? Lux
+1. Intro:Welcome to Traveler's Insight!!!
+   Input:What is your name? <Your_name>
+
+2. Create Recommendation:
+   Input:
+   a. What country are you interested in? Germany
+   b. For the country Germany, what is your recommendation? Eat the Marzupan
+   Output:
+   Whoohoo! You made this recommendation: Eat the Marzupan!
+
+3. Read Recommendation:
+   Input:
+   a. What country are you interested in? Germany
+   Output:
+   The country you are interested in is Germany!
+   Finn for the country Germany, the recommendation is Eat the Marzupan!
+
+4. Update Recommendation:
+   Input:
+   a. What country are you interested in? Germany
+   Output:
+   The country you are interested in is Germany!
+   The recommendation for Germany is Eat the Marzupan.
+   Input:
+   What would you like to change it to? Kraftwerk is beautiful
+   Output:
+   You changed the recommendation for Germany to Kraftwerk is beautiful. Thanks!
+
+5. Read Recommendation:
+   Input:
+   a. What country are you interested in? Germany
+   Output:
+   Finn for the country Germany, the recommendation is Kraftwerk is beautiful!
+
+6. Delete Recommendation:
+   Input:
+   a. What country are you interested in? Germany
+   Output:
+   The recommendation for Germany has been deleted from Traveler's Insight.
+
+7. Exit App
+   Output:
+   Happy travels!
