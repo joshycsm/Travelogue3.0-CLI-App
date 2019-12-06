@@ -5,6 +5,7 @@ class Cli
         @user = user
     end
 
+    
     def start
         puts "Welcome #{user.name}!"
         if Traveler.find_by(name: user.name)
